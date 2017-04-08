@@ -1,0 +1,42 @@
+BoxLayout:
+    orientation: 'vertical'
+    Image:
+        id: image
+        canvas.before:
+            Color:
+                rgb: 1.0, 0.5, 0.0
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas.after:
+            Color:
+                rgb: 1.0, 1.0, 0.0
+            Line:
+                #rectangle: 20, 20, 40, 40
+                rectangle: app.marquee_rect
+        on_touch_down: app.handle_select_start(args[0], args[1])
+        on_touch_up: app.handle_select(args[0], args[1])
+        on_touch_move: app.handle_drag(args[0], args[1])
+        #on_touch_up: print('Up! ' + str(args[1]))
+    BoxLayout:
+        size_hint_y: None
+        size_y: 100
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                id: display
+            BoxLayout:
+                Label:
+                    id: last_action
+                Button:
+                    size_hint: (None, None)
+                    text: 'Execute'
+                    on_press: app.execute_action()
+                Button:
+                    size_hint: (None, None)
+                    text: 'Capture region'
+                    on_press: app.capture_region()
+        Button:
+            size_hint: (None, None)
+            text: 'Update'
+            on_press: app.update_image()
